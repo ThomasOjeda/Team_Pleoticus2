@@ -7,6 +7,8 @@ public class PlayerController : MonoBehaviour
     private float horizontalMove;
     private float verticalMove;
     public CharacterController player;
+    private Vector3 playerInput = new Vector3();
+    private float norm;
 
     public float playerSpeed;
     // Start is called before the first frame update
@@ -20,7 +22,9 @@ public class PlayerController : MonoBehaviour
     {
         horizontalMove = Input.GetAxis("Horizontal");
         verticalMove = Input.GetAxis("Vertical");
-        player.Move(new Vector3(horizontalMove, 0, verticalMove) * playerSpeed * Time.deltaTime);
+        norm = horizontalMove + verticalMove;
+        playerInput.Set(horizontalMove/norm,0,verticalMove/norm);
+        player.Move(playerInput * playerSpeed * Time.deltaTime);
     }
 
     private void FixedUpdate() {
