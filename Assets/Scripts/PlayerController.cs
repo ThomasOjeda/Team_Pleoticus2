@@ -4,11 +4,15 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private float horizontalMove;
-    private float verticalMove;
+    public float horizontalMove;
+    public float verticalMove;
     public CharacterController player;
     private Vector3 playerInput = new Vector3();
     private float norm;
+    public Camera mainCamera;
+    private Vector3 camForward;
+    private Vector3 camRight;
+    private Vector3 movePlayer;
 
     public float playerSpeed;
     // Start is called before the first frame update
@@ -24,10 +28,16 @@ public class PlayerController : MonoBehaviour
         verticalMove = Input.GetAxis("Vertical");
         norm = horizontalMove + verticalMove;
         playerInput.Set(horizontalMove/norm,0,verticalMove/norm);
+        movePlayer = playerInput.x * camRight + playerInput.z * camForward;
         player.Move(playerInput * playerSpeed * Time.deltaTime);
     }
 
-    private void FixedUpdate() {
-        
+    void CamDirection() {
+        camForward = mainCamera.transform.forward;
+        camRight = mainCamera.transform.right;
+        camForward.y = 0;
+        camRight.y = 0;
+        camForward = camForward.normalized;
+        camRight = camRight.normalized;
     }
 }
