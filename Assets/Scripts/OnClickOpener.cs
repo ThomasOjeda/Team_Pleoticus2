@@ -8,7 +8,8 @@ public class OnClickOpener : MonoBehaviour
 
     public void openPopUp()
     {
-        bool isActive = toopen.activeSelf;
-        toopen.SetActive(!isActive);
+        /*bool isActive = toopen.activeSelf;
+        toopen.SetActive(!isActive);*/
+        toopen.SetActive(true);
     }
 }
