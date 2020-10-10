@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
         movePlayer = playerInput.x * camRight + playerInput.z * camForward;
         player.transform.LookAt(player.transform.position + movePlayer);
         player.Move(movePlayer * playerSpeed * Time.deltaTime);
+        CamMovement();
     }
 
     void CamDirection() {
@@ -41,5 +42,9 @@ public class PlayerController : MonoBehaviour
         camRight.y = 0;
         camForward = camForward.normalized;
         camRight = camRight.normalized;
+    }
+
+    void CamMovement(){
+        mainCamera.transform.position = player.transform.position;
     }
 }
