@@ -11,5 +11,6 @@ public class OnClickOpener : MonoBehaviour
         /*bool isActive = toopen.activeSelf;
         toopen.SetActive(!isActive);*/
         toopen.SetActive(true);
+        Cursor.lockState = CursorLockMode.None;
     }
 }

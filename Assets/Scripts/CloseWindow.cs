@@ -9,6 +9,7 @@ public class CloseWindow : MonoBehaviour
     public void closeWindow()
     {
         toclose.SetActive(false);
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
 }
