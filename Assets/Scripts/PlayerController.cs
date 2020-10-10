@@ -28,8 +28,9 @@ public class PlayerController : MonoBehaviour
         verticalMove = Input.GetAxis("Vertical");
         norm = horizontalMove + verticalMove;
         playerInput.Set(horizontalMove/norm,0,verticalMove/norm);
+        CamDirection();
         movePlayer = playerInput.x * camRight + playerInput.z * camForward;
-        player.Move(playerInput * playerSpeed * Time.deltaTime);
+        player.Move(movePlayer * playerSpeed * Time.deltaTime);
     }
 
     void CamDirection() {
