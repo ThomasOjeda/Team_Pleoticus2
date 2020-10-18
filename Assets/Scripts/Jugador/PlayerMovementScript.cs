@@ -4,8 +4,9 @@ using System.Collections.Specialized;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
+using Mirror;
 
-public class PlayerMovementScript : MonoBehaviour
+public class PlayerMovementScript : NetworkBehaviour
 {
 
     public CharacterController controller;
@@ -28,8 +29,10 @@ public class PlayerMovementScript : MonoBehaviour
     }
 
     // Update is called once per frame
+    [Client]
     void Update()
     {
+        if (!hasAuthority) { return; }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
         if (isGrounded && velocity.y < 0)

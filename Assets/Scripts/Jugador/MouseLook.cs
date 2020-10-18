@@ -4,8 +4,9 @@ using System.Collections.Specialized;
 using System.Security.Cryptography;
 using System.Threading;
 using UnityEngine;
+using Mirror;
 
-public class MouseLook : MonoBehaviour
+public class MouseLook : NetworkBehaviour
 {
 
     public float mouseSensitivity = 100f;
@@ -19,10 +20,11 @@ public class MouseLook : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
     }
-
+    [Client]
     // Update is called once per frame
     void Update()
     {
+        if (!hasAuthority) { return; }
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
         float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
