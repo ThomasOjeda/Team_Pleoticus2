@@ -18,6 +18,7 @@ public class PlayerMovementScript : NetworkBehaviour
     public Transform groundCheck;
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
+    private Animator anim;
 
     Vector3 velocity;
     bool isGrounded;
@@ -25,7 +26,7 @@ public class PlayerMovementScript : NetworkBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -56,7 +57,8 @@ public class PlayerMovementScript : NetworkBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-
+        anim.SetFloat("VelX",x);
+        anim.SetFloat("VelY", z);
 
     }
 }
