@@ -4,19 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class RoomDisplay : MonoBehaviour, IBeginDragHandler
+public class RoomDisplay : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    // Falta movimiento una vez que se encuentra en la grilla
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("begin drag");
-        transform.position = eventData.position;
-    }
-
-    public void OnBeginDrag(PointerEventData eventData)
-    {
-        Debug.Log("begin drag");
-        transform.position = eventData.position;
+        (transform.parent.GetComponentInParent<Map>()).SetTilesUnoccupied(gameObject, Input.mousePosition);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -25,13 +17,17 @@ public class RoomDisplay : MonoBehaviour, IBeginDragHandler
         transform.position = eventData.position;
     }
 
-    public void OnEndDrag(PointerEventData eventData)
-    {
-        
-    }
-
     public void centerRoomOnTile(Vector3 position)
     {
-        (transform.parent.GetComponentInParent<Map>()).CenterRoomOnTile(gameObject, Input.mousePosition);
+        (transform.parent.GetComponentInParent<Map>()).CenterRoomOnTile(gameObject, position);
     }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        Debug.Log("Pointer up");
+        Vector3 mousePosition = eventData.position;
+        centerRoomOnTile(mousePosition);
+    }
+
+    
 }

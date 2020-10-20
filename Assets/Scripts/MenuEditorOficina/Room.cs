@@ -10,4 +10,7 @@ public class Room : ScriptableObject
 
     public Sprite roomPreview;
     public Sprite roomImage;
+
+    public int tilesWidth;
+    public int tilesHeight;
 }

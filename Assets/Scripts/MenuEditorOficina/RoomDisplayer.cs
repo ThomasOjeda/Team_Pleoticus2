@@ -10,11 +10,11 @@ public class RoomDisplayer : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     [SerializeField] private Transform parent;
 
     public GameObject spawnedRoom;
-    private float screenWidth;
 
     private void Start()
     {
-        screenWidth = Screen.width;
+        Image roomImage = GetComponent<Image>();
+        roomImage.sprite = room.roomPreview;
         // Se debería agregar un pasillo de inicio
     }
 
@@ -24,12 +24,15 @@ public class RoomDisplayer : MonoBehaviour, IPointerDownHandler, IDragHandler, I
         Image roomImage = roomObject.AddComponent<Image>();
         roomImage.sprite = room.roomImage;
         float tileSize = parent.GetComponentInParent<Map>().TileSize;
-        ((RectTransform)roomImage.transform).sizeDelta = new Vector2(53.14f, 53.14f);
+        float canvasScale = GetComponentInParent<Canvas>().transform.localScale.x;
+        ((RectTransform)roomImage.transform).sizeDelta = new Vector2(tileSize * room.tilesWidth * canvasScale, tileSize * room.tilesHeight * canvasScale);
         RoomDisplay roomDisplay = roomObject.AddComponent<RoomDisplay>();
         roomDisplay.transform.SetParent(parent);
-        roomObject.GetComponent<RectTransform>().pivot = new Vector2(0, 1);
+        roomObject.AddComponent<Button>();
         spawnedRoom = (GameObject)Instantiate(roomObject, transform.position, Quaternion.identity, parent);
         Destroy(roomObject);
+
+        Debug.Log("scale: " + parent.parent.parent.parent.localScale);
 
     }
 
@@ -41,38 +44,30 @@ public class RoomDisplayer : MonoBehaviour, IPointerDownHandler, IDragHandler, I
     }
 
     public void OnPointerUp(PointerEventData eventData)
-    {
+    { 
         Vector3 mousePosition = eventData.position;
         spawnedRoom.GetComponent<RoomDisplay>().centerRoomOnTile(mousePosition);
+
         // Faltan realizar chequeos de puertas y habitaciones contiguas
     }
 
     void Update()
     {
-        // Falta acomodar para que gire correctamente
         if (Input.GetKeyDown(KeyCode.R) && spawnedRoom != null)
         {
             Debug.Log("rotate");
             spawnedRoom.transform.Rotate(0f, 0, 90f);
         }
-
-        // Re-hacer. Se agrega para poder redimensionar las rooms displays
-        if(Screen.width != screenWidth)
-        {
-            float factor = Screen.width / screenWidth;
-            float tileSize = parent.GetComponentInParent<Map>().TileSize;
-            ((RectTransform)spawnedRoom.transform).sizeDelta = new Vector2((tileSize*factor) * 2, (tileSize*factor) * 2);
-            screenWidth = Screen.width;
-        }
     }
 
-    // Agregar funcionamiento para mostrar nombre y descripción de cada sala
     public void OnPointerEnter(PointerEventData eventData)
     {
+        Tooltip.ShowTooltip("<b>   "+room.name+"</b>\n" +"<i>"+room.description+"</i>");
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        Tooltip.HideTooltip();
     }
 
 }
