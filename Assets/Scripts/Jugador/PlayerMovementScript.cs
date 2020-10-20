@@ -19,10 +19,13 @@ public class PlayerMovementScript : NetworkBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
     private Animator anim;
+    private Vector3 posAnt;
 
+    private Vector3 vel;
     Vector3 velocity;
     bool isGrounded;
-
+    float x, z;
+     
     // Start is called before the first frame update
     void Start()
     {
@@ -33,6 +36,7 @@ public class PlayerMovementScript : NetworkBehaviour
     [Client]
     void Update()
     {
+        posAnt = transform.position;
         if (!hasAuthority) { return; }
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
@@ -41,8 +45,8 @@ public class PlayerMovementScript : NetworkBehaviour
             velocity.y = -2f;
         }
 
-        float x = Input.GetAxis("Horizontal");
-        float z = Input.GetAxis("Vertical");
+        x = Input.GetAxis("Horizontal");
+        z = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * x + transform.forward * z;
 
@@ -57,8 +61,10 @@ public class PlayerMovementScript : NetworkBehaviour
 
         controller.Move(velocity * Time.deltaTime);
 
-        anim.SetFloat("VelX",x);
-        anim.SetFloat("VelY", z);
+        vel.Set(transform.position.x - posAnt.x, 0, transform.position.z - posAnt.z);
+        vel = vel.normalized;
 
+        anim.SetFloat("VelX", vel.x);
+        anim.SetFloat("VelY", vel.z);
     }
 }
