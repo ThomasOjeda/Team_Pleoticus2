@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   syncMode: 0
   syncInterval: 0.1
-  mouseSensitivity: 100
+  mouseSensitivity: 80
   playerBody: {fileID: 2364376836732172132}
   playerCamera: {fileID: 3058948309505406473}
 --- !u!143 &2364376836732172061
@@ -194,7 +194,7 @@ MonoBehaviour:
   syncMode: 0
   syncInterval: 0.1
   controller: {fileID: 2364376836732172061}
-  speed: 5
+  speed: 2.5
   gravity: -9.81
   jumpHeight: 2
   groundCheck: {fileID: 2364376836981820435}
