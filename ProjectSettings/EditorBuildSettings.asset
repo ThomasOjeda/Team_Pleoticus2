@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Escenas multijugador/Prueba.unity
+    guid: 98ef34f51c8670d4ca6bf795626ad98e
   m_configObjects: {}
