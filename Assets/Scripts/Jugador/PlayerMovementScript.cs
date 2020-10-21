@@ -25,7 +25,11 @@ public class PlayerMovementScript : NetworkBehaviour
     Vector3 velocity;
     bool isGrounded;
     float x, z;
-     
+    private Vector3 refAdelante = new Vector3(0,0,1);
+    private Vector3 refDerecha = new Vector3(-1, 0, 0);
+    float rotacion;
+    public Transform playerBody;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -62,8 +66,12 @@ public class PlayerMovementScript : NetworkBehaviour
         controller.Move(velocity * Time.deltaTime);
 
         vel.Set(transform.position.x - posAnt.x, 0, transform.position.z - posAnt.z);
+        rotacion = Vector3.Angle(refAdelante, playerBody.forward);
+        rotacion = Mathf.Sign(Vector3.Dot(playerBody.forward, refDerecha)) * rotacion;
+        vel = Quaternion.Euler(0,rotacion,0)*vel;
         vel = vel.normalized;
-
+        Debug.Log(rotacion);
+        Debug.Log(vel);
         anim.SetFloat("VelX", vel.x);
         anim.SetFloat("VelY", vel.z);
     }
