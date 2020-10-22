@@ -5425,8 +5425,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48549eba14a13dc419bc50e7995bdea5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   mouseSensitivity: 100
   playerBody: {fileID: 1051965276}
+  playerCamera: {fileID: 0}
 --- !u!81 &546457212
 AudioListener:
   m_ObjectHideFlags: 0
@@ -8013,6 +8016,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4264264182f94f84ca61347e883d485a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  syncMode: 0
+  syncInterval: 0.1
   controller: {fileID: 1051965275}
   speed: 3
   gravity: -9.81
